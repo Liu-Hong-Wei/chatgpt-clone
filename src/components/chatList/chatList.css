@@ -17,13 +17,17 @@
   }
 
   a {
-    padding: 10px;
+    margin: 5px;
+    padding: 8px 5px;
     border-radius: 10px;
     font-size: 14px;
     font-weight: 500;
 
     &:hover {
-      background-color: #8839ef;
+      cursor: pointer;
+      background: #8839ef;
+      transition: all 200ms linear;
+      box-shadow: 0 0 5px #8839ef;
       opacity: 0.8;
       color: #e6e9ef;
     }
