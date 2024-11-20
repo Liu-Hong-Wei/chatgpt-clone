@@ -33,7 +33,7 @@ const DashboardPage = () => {
             </div>
             <div className="option">
               <img src="/code.png" alt="" />
-              <span>Help with my Code</span>
+              <span>Help with Code</span>
             </div>
           </div>
         </div>

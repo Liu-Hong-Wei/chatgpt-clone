@@ -10,6 +10,8 @@
 
   .content {
     flex: 4;
+    border-radius: 10px;
+    box-shadow: inset 0 0 3px #ccd0da;
     background-color: #e6e9ef;
   }
 }
