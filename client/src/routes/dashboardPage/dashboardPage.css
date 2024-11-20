@@ -1,0 +1,123 @@
+.dashboardPage {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .texts {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    gap: 50px;
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+
+      img {
+        width: 64px;
+        height: 64px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+    }
+
+    .options {
+      user-select: none;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+
+      .option {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        font-size: 20px;
+        border: 2px solid #ccd0da;
+        border-radius: 20px;
+        box-shadow: 0 0 10px #ccd0da;
+        gap: 5px;
+
+        &:hover {
+          cursor: pointer;
+          background-color: #dce0e8;
+        }
+
+        img {
+          width: 48px;
+          height: 48px;
+        }
+      }
+    }
+  }
+
+  .formContainer {
+    user-select: none;
+    margin-top: auto;
+    width: 50%;
+    max-height: 256px;
+    padding: 8px 15px;
+    background-color: #dce0e8;
+    border-radius: 20px;
+    margin-bottom: 10px;
+
+    form {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+
+      input {
+        flex: 1;
+        height: 100%;
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 18px;
+        font-weight: 500;
+        color: #4c4f69;
+      }
+
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        background: #ccd0da;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #ccd0da;
+        width: 48px;
+        height: 48px;
+        padding: 5px;
+
+        &:hover {
+          cursor: pointer;
+          background: #7287fd;
+          transition: all 300ms linear;
+          box-shadow: 0 0 10px #7287fd;
+          img {
+            filter: invert(1);
+          }
+        }
+
+        img {
+          width: 60%;
+          height: 60%;
+          object-fit: contain;
+        }
+      }
+    }
+  }
+}
