@@ -23,12 +23,17 @@
 
       .message {
         font-size: 16px;
-        padding: 20px;
-        max-width: 100%;
+        padding: 15px 30px;
+        max-width: 90%;
         border-radius: 15px;
         align-self: flex-start;
         line-height: 1.75;
-        background-color: #ea76cb;
+        background-color: #dc8a78;
+
+        p, li {
+          margin:15px 0px;
+
+        }
 
         &.user {
           background-color: #04a5e5;
