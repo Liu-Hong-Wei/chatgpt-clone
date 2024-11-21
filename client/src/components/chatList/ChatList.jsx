@@ -4,8 +4,9 @@ import "./chatList.css";
 const ChatList = () => {
   return (
     <div className="chatList">
-      <span className="title">DASHBOARD</span>
-      <Link to="/dashboard"></Link>
+      <Link to="/dashboard">
+        <span className="title">DASHBOARD</span>
+      </Link>
       <Link to="/">Create a new Chat</Link>
       <Link to="/">Explore GPT</Link>
       <Link to="/">Contact</Link>
