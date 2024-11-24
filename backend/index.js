@@ -1,6 +1,8 @@
 import express from "express";
-import ImageKit from "imagekit";
 import cors from "cors";
+import path from "path";
+import url, { fileURLToPath } from "url";
+import ImageKit from "imagekit";
 import mongoose from "mongoose";
 import Chat from "./models/chat.js";
 import UserChats from "./models/userChats.js";
@@ -8,6 +10,9 @@ import { ClerkExpressRequireAuth } from "@clerk/clerk-sdk-node";
 
 const port = process.env.PORT || 3000;
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(
   cors({
@@ -80,8 +85,8 @@ app.post("/api/chats", ClerkExpressRequireAuth(), async (req, res) => {
           },
         }
       );
+      res.status(201).send(newChat._id);
     }
-    res.status(201).send(newChat._id);
   } catch (error) {
     console.error("Error creating chat:", error);
     res.status(500).json({ error: "Failed to create chat" });
@@ -92,7 +97,7 @@ app.get("/api/userchats", ClerkExpressRequireAuth(), async (req, res) => {
   const userId = req.auth.userId;
 
   try {
-    const userChats = await UserChats.find({ userId});
+    const userChats = await UserChats.find({ userId });
     res.status(200).json(userChats[0].chats);
   } catch (error) {
     console.error("Error fetching user chats:", error);
@@ -100,12 +105,68 @@ app.get("/api/userchats", ClerkExpressRequireAuth(), async (req, res) => {
   }
 });
 
+app.get("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
+  const userId = req.auth.userId;
+
+  try {
+    const chat = await Chat.findOne({ _id: req.params.id, userId });
+    res.status(200).send(chat);
+  } catch (error) {
+    console.error("Error fetching user chats:", error);
+    res.status(500).json({ error: "Failed to fetch user chats" });
+  }
+});
+
+app.put("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
+  const userId = req.auth.userId;
+
+  const { question, answer, img } = req.body;
+
+  const newItems = [
+    ...(question
+      ? [{ role: "user", parts: [{ text: question }], ...(img && { img }) }]
+      : []),
+
+    { role: "model", parts: [{ text: answer }] },
+  ];
+
+  try {
+    const updatedChat = await Chat.updateOne(
+      { _id: req.params.id, userId },
+
+      {
+        $push: {
+          history: {
+            $each: newItems,
+          },
+        },
+      }
+    );
+
+    res.status(200).send(updatedChat);
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).send("Error adding conversation!");
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
+
   res.status(401).send("Unauthenticated!");
+});
+
+// PRODUCTION
+
+app.use(express.static(path.join(__dirname, "../client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
 });
 
 app.listen(port, () => {
   connect();
-  console.log(`Server is running on port ${port}`);
+
+  console.log("Server running on 3000");
 });
